@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Explorer</title>
+</head>
+<body>
+    <h1>Welcome to Game Explorer</h1>
+    {% if user.is_authenticated %}
+        <p>Hello, {{ user.username }}!</p>
+        <a href="{% url 'user_logout' %}">Logout</a>
+        <a href="{% url 'collect_pc_specs' %}">Enter PC Specifications</a>
+    {% else %}
+        <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'user_login' %}">Login</a>
+    {% endif %}
+</body>
+</html>

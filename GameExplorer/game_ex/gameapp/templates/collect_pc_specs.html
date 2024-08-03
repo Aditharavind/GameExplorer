@@ -1,0 +1,36 @@
+<!-- collect_pc_specs.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Collect PC Specs</title>
+    <script>
+        function fillPCSpecs() {
+            // Function to fetch and fill PC specs using AJAX
+            fetch('/get_pc_specs/', {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('id_cpu').value = data.cpu;
+                document.getElementById('id_gpu').value = data.gpu;
+                document.getElementById('id_ram').value = data.ram;
+                document.getElementById('id_storage').value = data.storage;
+                document.getElementById('id_os_version').value = data.os_version;
+            })
+            .catch(error => console.error('Error fetching PC specs:', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>Collect PC Specs</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="button" onclick="fillPCSpecs()">Get Specs from PC</button>
+        <button type="submit">Save Specs</button>
+    </form>
+</body>
+</html>

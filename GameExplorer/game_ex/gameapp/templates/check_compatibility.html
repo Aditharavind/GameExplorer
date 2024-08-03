@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ game.name }} Compatibility Check</title>
+</head>
+<body>
+    <h1>{{ game.name }}</h1>
+    <p><strong>Genre:</strong> {{ game.genre }}</p>
+    <p><strong>Description:</strong> {{ game.description }}</p>
+    <h2>System Requirements:</h2>
+    <ul>
+        <li>Minimum CPU: {{ game.min_cpu }}</li>
+        <li>Minimum GPU: {{ game.min_gpu }}</li>
+        <li>Minimum RAM: {{ game.min_ram }} GB</li>
+        <li>Minimum Storage: {{ game.min_storage }} GB</li>
+        <li>Minimum OS Version: {{ game.min_os_version }}</li>
+    </ul>
+    <h2>Compatibility:</h2>
+    {% if compatible %}
+        <p style="color: green;">Your system meets the requirements for this game!</p>
+    {% else %}
+        <p style="color: red;">Your system does not meet the requirements for this game.</p>
+    {% endif %}
+
+    <h2>Reviews:</h2>
+    <ul>
+        {% for review in reviews %}
+            <li>
+                <strong>{{ review.user.username }}</strong>: {{ review.rating }} stars
+                <p>{{ review.comment }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Leave a Review:</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ review_form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+    <a href="{% url 'list_games' %}">Back to Games List</a>
+</body>
+</html>
